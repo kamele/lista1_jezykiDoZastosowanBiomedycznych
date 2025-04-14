@@ -176,7 +176,7 @@ class TranskrybujTest {
     @Test
     fun resultIsCorrect() {
         val dnaStrand="TTCGAC"
-        val expectedTranskrybuj = "AAGCUG"
+        val expectedTranskrybuj = "GUCGAA"
         val actualTranskrybuj = transkrybuj(dnaStrand)
         assertEquals(expectedTranskrybuj, actualTranskrybuj)
     }

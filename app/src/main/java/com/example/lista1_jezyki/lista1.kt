@@ -49,9 +49,9 @@ fun common(x: IntArray, y: IntArray):ArrayList<Int>{
 
     var i = 0;
     var j = 0;
-    println("x.size=${x.size}; y.size=${y.size}; $common")
+//    println("x.size=${x.size}; y.size=${y.size}; $common")
     while(i<x.size && j<y.size){
-        println("x[$i]=${x[i]}; y[$j]=${y[j]}; $common")
+//        println("x[$i]=${x[i]}; y[$j]=${y[j]}; $common")
         if (x[i]==y[j]){
             common.add(x[i]);
             i++;
@@ -212,8 +212,9 @@ fun transkrybuj(strand:String):String{
         }
         result+=elem
     }
-    return result
+    return result.reversed()
 }
+
 fun main(){
     println("Zadanie 1: heron")
     println(heron(6.0,8.0,10.0))
@@ -274,7 +275,7 @@ fun main(){
 
     println("transkrybuj")
     val dnaStrand2="TTCGAC"
-    val expectedTranskrybuj = "AAGCUG"
+    val expectedTranskrybuj = "GUCGAA"
     val actualTranskrybuj = transkrybuj(dnaStrand2)
     assertEquals(expectedTranskrybuj, actualTranskrybuj)
     println(transkrybuj(dnaStrand2))
