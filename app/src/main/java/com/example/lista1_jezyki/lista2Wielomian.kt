@@ -2,11 +2,11 @@ package com.example.lista1_jezyki
 
 import java.lang.Math.pow
 
-class Wielomian(){
+class Wielomian{
 
     var wspolczynniki: IntArray = intArrayOf()
 
-    constructor(wspolczynniki: IntArray) : this() {
+    constructor(wspolczynniki: IntArray){
         if (wspolczynniki.size > 0){
             if (wspolczynniki.size > 1 && wspolczynniki[0]==0){
                 throw IllegalArgumentException("Współczynnik przy najwyższej potędze wielomianu nie moze byc zero")
