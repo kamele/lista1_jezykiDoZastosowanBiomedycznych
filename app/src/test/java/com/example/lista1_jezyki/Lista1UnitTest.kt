@@ -3,9 +3,11 @@ import org.junit.Test
 import org.junit.Assert.*
 import org.junit.Assert.assertEquals
 import org.junit.jupiter.api.assertThrows
-import com.example.lista1_jezyki.heron as heron
+import kotlin.math.sqrt
+
 
 class HeronTest {
+
     @Test
     fun resultIsCorrect() {
         val sideA = 6.0

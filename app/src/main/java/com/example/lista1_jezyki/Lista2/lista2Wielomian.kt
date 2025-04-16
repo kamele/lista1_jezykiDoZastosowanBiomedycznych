@@ -1,4 +1,4 @@
-package com.example.lista1_jezyki
+package com.example.lista1_jezyki.Lista2
 
 import java.lang.Math.pow
 
