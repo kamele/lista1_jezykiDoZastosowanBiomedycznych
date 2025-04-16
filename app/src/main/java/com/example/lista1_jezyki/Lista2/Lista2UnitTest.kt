@@ -1,6 +1,6 @@
 package com.example.lista1_jezyki.Lista2
 
-import com.example.lista1_jezyki.Lista2.lista2Sequence.DNASequence
+import com.example.lista1_jezyki.Lista2.lista2Sequence.*
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -225,3 +225,66 @@ class Lista2UnitTestDNASequence{
         assertEquals("GUCGAA", dna3.transcribe().data)
     }
 }
+
+class Lista2UnitTestRNASequence{
+    @Test
+    fun constructorIsCorrect() {
+        var rna = RNASequence(identifier = 1, data = "AAUUCGAUCG")
+        assertEquals(1, rna.identifier)
+        assertEquals("AAUUCGAUCG", rna.data)
+    }
+    @Test
+    fun constructorIllegalArgumentException() {
+        var rna = assertThrows<IllegalArgumentException>("Wartości muszą należeć do liter A, G, C i U") {
+            RNASequence(identifier = 1, data = "AAUUUCGAUPP")
+        }
+    }
+    @Test
+    fun toStringIsCorrect() {
+        var rna = RNASequence(identifier = 1, data = "AAUUCGAUCG")
+        assertEquals(">1 \n AAUUCGAUCG", rna.toString())
+    }
+    @Test
+    fun mutateIsCorrect() {
+        var rna = RNASequence(identifier = 1, data = "AAUUCGAUCG")
+        rna.mutate(0, 'U')
+        assertEquals("UAUUCGAUCG", rna.data)
+    }
+    @Test
+    fun mutateIllegalArgumentExceptionWrongLetter() {
+        var rna = assertThrows<IllegalArgumentException>("Wartości muszą należeć do liter A, G, C i U") {
+            var rna = RNASequence(identifier = 1, data = "AAUUCGAUCG")
+            rna.mutate(0, 'P')
+        }
+    }
+    @Test
+    fun mutateIllegalArgumentExceptionWrongPosition() {
+        var rna = assertThrows<IllegalArgumentException>("Pozycja poza zakresem zasad") {
+            var rna = RNASequence(identifier = 1, data = "AAUUCGAUCG")
+            rna.mutate(12, 'A')
+        }
+    }
+    @Test
+    fun findMotifIsCorrect() {
+        var rna = RNASequence(identifier = 1, data = "AAUUCGAUCG")
+        assertEquals(2, rna.findMotif("UU"))
+    }
+    @Test
+    fun findMotifIllegalArgumentException() {
+        var rna = assertThrows<IllegalArgumentException>("Wartości muszą należeć do liter A, G, C i U") {
+            var rna = RNASequence(identifier = 1, data = "AAUUCGAUCG")
+            rna.findMotif("UP")
+        }
+    }
+    @Test
+    fun findMotifNotFound() {
+        var rna = RNASequence(identifier = 1, data = "AAUUCGAUCG")
+        assertEquals(-1, rna.findMotif("AG"))
+    }
+    @Test
+    fun transcribeIsCorrect() {
+        val rna3= RNASequence(3, "UUCGAC")
+        assertEquals("DF", rna3.transcribe().data)
+    }
+}
+
