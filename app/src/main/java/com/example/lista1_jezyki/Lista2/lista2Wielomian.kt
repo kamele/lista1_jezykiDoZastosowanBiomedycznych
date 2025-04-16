@@ -139,9 +139,7 @@ class Wielomian{
         this.wspolczynniki = (this - w2).wspolczynniki
     }
     operator fun timesAssign(w2: Wielomian){
-        println(tekstWersjaWielomianu())
-        println(w2.tekstWersjaWielomianu())
-        this.wspolczynniki = (this - w2).wspolczynniki
+        this.wspolczynniki = (this * w2).wspolczynniki
     }
 }
 
