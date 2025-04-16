@@ -286,5 +286,66 @@ class Lista2UnitTestRNASequence{
         val rna3= RNASequence(3, "UUCGAC")
         assertEquals("DF", rna3.transcribe().data)
     }
+    @Test
+    fun transcribeLong() {
+        val rna3= RNASequence(3, "GCUGCAGCCGCGUGUUGCGAUGACGAAGAGUUUUUCGGUGGCGGAGGGCAUCACAUUAUCAUA")
+        assertEquals("IIIHHGGGGFFEEDDCCAAAA", rna3.transcribe().data)
+    }
 }
 
+class Lista2UnitTestProteinSequence{
+    @Test
+    fun constructorIsCorrect() {
+        var rna = ProteinSequence(identifier = 1, data = "AAUUCGAUCG")
+        assertEquals(1, rna.identifier)
+        assertEquals("AAUUCGAUCG", rna.data)
+    }
+    @Test
+    fun constructorIllegalArgumentException() {
+        var rna = assertThrows<IllegalArgumentException>("Wartości muszą należeć do liter A, G, C i U") {
+            ProteinSequence(identifier = 1, data = "AAUUUCGAUBB")
+        }
+    }
+    @Test
+    fun toStringIsCorrect() {
+        var rna = ProteinSequence(identifier = 1, data = "AAUUCGAUCG")
+        assertEquals(">1 \n AAUUCGAUCG", rna.toString())
+    }
+    @Test
+    fun mutateIsCorrect() {
+        var rna = ProteinSequence(identifier = 1, data = "AAUUCGAUCG")
+        rna.mutate(0, 'U')
+        assertEquals("UAUUCGAUCG", rna.data)
+    }
+    @Test
+    fun mutateIllegalArgumentExceptionWrongLetter() {
+        var rna = assertThrows<IllegalArgumentException>("Wartości muszą należeć do liter A, G, C i U") {
+            var rna = ProteinSequence(identifier = 1, data = "AAUUCGAUCG")
+            rna.mutate(0, 'B')
+        }
+    }
+    @Test
+    fun mutateIllegalArgumentExceptionWrongPosition() {
+        var rna = assertThrows<IllegalArgumentException>("Pozycja poza zakresem zasad") {
+            var rna = ProteinSequence(identifier = 1, data = "AAUUCGAUCG")
+            rna.mutate(12, 'A')
+        }
+    }
+    @Test
+    fun findMotifIsCorrect() {
+        var rna = ProteinSequence(identifier = 1, data = "AAUUCGAUCG")
+        assertEquals(2, rna.findMotif("UU"))
+    }
+    @Test
+    fun findMotifIllegalArgumentException() {
+        var rna = assertThrows<IllegalArgumentException>("Wartości muszą należeć do liter A, G, C i U") {
+            var rna = ProteinSequence(identifier = 1, data = "AAUUCGAUCG")
+            rna.findMotif("UB")
+        }
+    }
+    @Test
+    fun findMotifNotFound() {
+        var rna = ProteinSequence(identifier = 1, data = "AAUUCGAUCG")
+        assertEquals(-1, rna.findMotif("AG"))
+    }
+}
