@@ -158,33 +158,70 @@ class Lista2UnitTestWielomiany {
 
 }
 
-class Lista2UnitTest{
+class Lista2UnitTestDNASequence{
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
-    }
-    @Test
-    fun isCorrect() {
+    fun constructorIsCorrect() {
         var dna = DNASequence(identifier = 1, data = "AATTCGATCG")
-        println(dna.toString())//AATTCGATCG
-        dna.mutate(0, 'T')
-        println(dna.toString())//TATTCGATCG
-        println(dna.findMotif("TT"))//2
-        println(dna.findMotif("AG"))//-1
-
-        println("komplement")
-        val dnaStrand="AAGCTG"
-        val dna2= DNASequence(2, dnaStrand)
-        val expectedKomplement = "CAGCTT"
-        val actualKomplement = dna2.complement()
-        assertEquals(expectedKomplement, actualKomplement)
-
-        println("transkrybuj")
-        val dnaStrand2="TTCGAC"
-        val dna3= DNASequence(3, dnaStrand2)
-        val expectedTranskrybuj = "GUCGAA"
-        val actualTranskrybuj = dna3.transcribe().data
-        assertEquals(expectedTranskrybuj, actualTranskrybuj)
+        assertEquals(1, dna.identifier)
+        assertEquals("AATTCGATCG", dna.data)
     }
-   
+    @Test
+    fun constructorIllegalArgumentException() {
+        var dna = assertThrows<IllegalArgumentException>("Wartości muszą należeć do liter A, G, C i T") {
+            DNASequence(identifier = 1, data = "AATTTCGATPP")
+        }
+    }
+    @Test
+    fun toStringIsCorrect() {
+        var dna = DNASequence(identifier = 1, data = "AATTCGATCG")
+        assertEquals(">1 \n AATTCGATCG", dna.toString())
+    }
+    @Test
+    fun mutateIsCorrect() {
+        var dna = DNASequence(identifier = 1, data = "AATTCGATCG")
+        dna.mutate(0, 'T')
+        assertEquals("TATTCGATCG", dna.data)
+    }
+    @Test
+    fun mutateIllegalArgumentExceptionWrongLetter() {
+        var dna = assertThrows<IllegalArgumentException>("Wartości muszą należeć do liter A, G, C i T") {
+            var dna = DNASequence(identifier = 1, data = "AATTCGATCG")
+            dna.mutate(0, 'P')
+        }
+    }
+    @Test
+    fun mutateIllegalArgumentExceptionWrongPosition() {
+        var dna = assertThrows<IllegalArgumentException>("Pozycja poza zakresem zasad") {
+            var dna = DNASequence(identifier = 1, data = "AATTCGATCG")
+            dna.mutate(12, 'A')
+        }
+    }
+    @Test
+    fun findMotifIsCorrect() {
+        var dna = DNASequence(identifier = 1, data = "AATTCGATCG")
+        assertEquals(2, dna.findMotif("TT"))
+    }
+    @Test
+    fun findMotifIllegalArgumentException() {
+        var dna = assertThrows<IllegalArgumentException>("Wartości muszą należeć do liter A, G, C i T") {
+            var dna = DNASequence(identifier = 1, data = "AATTCGATCG")
+            dna.findMotif("TP")
+        }
+    }
+    @Test
+    fun findMotifNotFound() {
+        var dna = DNASequence(identifier = 1, data = "AATTCGATCG")
+        assertEquals(-1, dna.findMotif("AG"))
+    }
+    @Test
+    fun complementIsCorrect() {
+        val dna2= DNASequence(2, "AAGCTG")
+        assertEquals("CAGCTT", dna2.complement())
+    }
+
+    @Test
+    fun transcribeIsCorrect() {
+        val dna3= DNASequence(3, "TTCGAC")
+        assertEquals("GUCGAA", dna3.transcribe().data)
+    }
 }
